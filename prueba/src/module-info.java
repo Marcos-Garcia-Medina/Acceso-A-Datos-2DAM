@@ -1,0 +1,9 @@
+/**
+ * 
+ */
+/**
+ * @author ecore
+ *
+ */
+module prueba {
+}
