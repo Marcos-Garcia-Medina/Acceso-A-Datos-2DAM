@@ -115,10 +115,32 @@ public abstract class AnimalDAO{
 			e.printStackTrace();
 		}
 		
+		closeConnection();
 		return animales;
 		
 	}
 	
+	public static void updateAnimal(Animal animal){
+		connection = openConnection();
+		
+		String query = "update animales set nombre = ?, peso_aproximado = ?, habitat = ? where id = ?";
+		
+		try {
+			PreparedStatement ps = connection.prepareStatement(query);
+			
+			ps.setString(1, animal.getNombre());
+			ps.setDouble(2, animal.getPeso_aproximado());
+			ps.setString(3, animal.getHabitat());
+			ps.setInt(4, animal.getId());	
+			
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		closeConnection();
+	}
 	private static Connection openConnection() {
 		DatabaseConnection dbConnection = new DatabaseConnection();
 		connection = dbConnection.getConnection();
