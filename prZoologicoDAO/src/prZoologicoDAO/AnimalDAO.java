@@ -1,9 +1,11 @@
 package prZoologicoDAO;
 
 import java.sql.Connection;
-import java.sql.Statement;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 public abstract class AnimalDAO{
 	
@@ -29,7 +31,8 @@ public abstract class AnimalDAO{
 		}
 	}
 	
-	public static void deleteAnimal() {
+	//Borrar todos los animales.
+	public static void deleteAllAnimales() {
 		connection = openConnection();
 		String query = "delete from animales";
 		
@@ -40,6 +43,80 @@ public abstract class AnimalDAO{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public static void deleteAnimalByNombre(String nombre) {
+		connection = openConnection();
+		String query = "delete from animales where nombre=?";
+		
+		PreparedStatement statement;
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, nombre);
+			preparedStatement.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		closeConnection();
+	}
+	
+	public static Animal findById(int id) {
+		connection = openConnection();
+		
+		String query = "select * from animales where id = ?";
+		Animal animal = null;
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setInt(1, id);
+			ResultSet  rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				animal = new Animal(rs.getInt("id"),
+										   rs.getString("nombre"),
+										   rs.getDouble("peso_aproximado"),
+										   rs.getString("habitat")
+									);	
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		closeConnection();
+		
+		return animal;
+	}
+	
+	public static ArrayList<Animal> findAllAnimales(){
+		connection = openConnection();
+		
+		ArrayList<Animal> animales = new ArrayList<>();
+		
+		String query = "select * from animales";
+		
+		try {
+			PreparedStatement ps = connection.prepareStatement(query);
+			ResultSet rs = ps.executeQuery();
+			
+			Animal animal;
+			while(rs.next()) {
+				animal = new Animal(rs.getInt("id"),
+						   rs.getString("nombre"),
+						   rs.getDouble("peso_aproximado"),
+						   rs.getString("habitat")
+					);
+				animales.add(animal);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return animales;
+		
 	}
 	
 	private static Connection openConnection() {

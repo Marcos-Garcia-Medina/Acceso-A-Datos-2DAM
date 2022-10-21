@@ -6,12 +6,12 @@ public class Animal {
 	private String habitat;
 	private double peso_aproximado;
 	
-	public Animal(int id, String nombre, String habitat, double peso_aproximado) {
+	public Animal(int id, String nombre, double peso_aproximado, String habitat) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
-		this.habitat = habitat;
 		this.peso_aproximado = peso_aproximado;
+		this.habitat = habitat;
 	}
 
 	public Animal(String nombre, String habitat, double peso_aproximado) {
