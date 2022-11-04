@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import UtilsDB.DatabaseConnection;
 import pojo.Temporada;
 
-public class TemporadaDao implements Dao<Temporada>{
+public class TemporadaDao extends ObjetoDao implements InterfazDao<Temporada>{
 
 	private static Connection connection;
 	
@@ -48,31 +48,25 @@ public class TemporadaDao implements Dao<Temporada>{
 	}
 
 	@Override
-	public void modificar(Temporada t) {
+	public void modificar(Temporada temporada) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void borrar(Temporada t) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void borrar(Temporada temporada) {
+		connection = openConnection();
 
-	private static Connection openConnection() {
-		DatabaseConnection dbConnection = new DatabaseConnection();
-		connection = dbConnection.getConnection();
-		return connection;
+        String query = "delete from temporadas where id = ?";
+        
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, temporada.getId());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        closeConnection();
 	}
-	
-	private static void closeConnection() {
-		try {
-			connection.close();
-			connection = null;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
 }
