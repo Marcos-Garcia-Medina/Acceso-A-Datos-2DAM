@@ -22,4 +22,4 @@ CREATE TABLE entitys (
     entityDesc 		 VARCHAR(40) NOT NULL
 );
 
-SELECT * FROM entitys;
+SELECT * FROM backrooms;
