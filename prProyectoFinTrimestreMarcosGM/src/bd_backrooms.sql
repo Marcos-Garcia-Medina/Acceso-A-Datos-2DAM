@@ -22,4 +22,5 @@ CREATE TABLE entitys (
     entityDesc 		 VARCHAR(40) NOT NULL
 );
 
+ALTER TABLE entitys ADD FOREIGN KEY (backroomNum) REFERENCES backrooms(levelNum);
 SELECT * FROM backrooms;

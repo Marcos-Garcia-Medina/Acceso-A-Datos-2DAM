@@ -110,26 +110,54 @@ public class BackroomDao extends ObjetoDao implements InterfazDao<Backroom>{
 	}
 
 	@Override
-	public void borrar(Backroom t) {
-		int levelNum = t.getLevelNum();
-
-        BackroomDao backroomDao = new BackroomDao();
-        EntityDao entityDao = new EntityDao();
-        entityDao.buscarPorId(levelNum);
-
-        connection = openConnection();
-
-        String query = "delete from backrooms where levelNum = ?";
-        try {
-            PreparedStatement ps = connection.prepareStatement(query);
-            ps.setInt(1, levelNum);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        closeConnection();
+	public void borrar(Backroom backroom) {
+		int levelNum = backroom.getLevelNum();
 		
+		EntityDao entityDao = new EntityDao();
+		entityDao.borrarPorBackroom(levelNum); 
+		
+		connection = openConnection();
+		
+		String query = "delete from backrooms WHERE levelNum = ?";
+		
+		try {
+			PreparedStatement ps = connection.prepareStatement(query);
+			ps.setInt(1, levelNum); 
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		closeConnection();
 	}
+
+	public Backroom buscarPorNombre(String i) {
+		connection = openConnection();
+		
+		String query = "select * from backrooms where backroomName = ?";
+		Backroom backroom = null;
+		PreparedStatement ps;
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setString(1, i);
+			ResultSet  rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				backroom = new Backroom(rs.getInt("levelNum"),
+									rs.getString("backroomName"),
+									rs.getInt("entitysNum"),
+									rs.getString("difficulty"),
+									null);	
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		closeConnection();
+		
+		return backroom;
+	}
+	
+	
 
 }

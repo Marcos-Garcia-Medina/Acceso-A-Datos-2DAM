@@ -33,4 +33,5 @@ public interface InterfazDao<T> {
 	 * @param t Un objeto T.
 	 */
 	public void borrar(T t);
+
 }

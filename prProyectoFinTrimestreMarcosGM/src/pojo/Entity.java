@@ -20,6 +20,13 @@ public class Entity {
 		this.dangerousness = dangerousness;
 		this.entityDesc = entityDesc;
 	}
+	
+	public Entity(String entityName, String dangerousness, String entityDesc) {
+		super();
+		this.entityName = entityName;
+		this.dangerousness = dangerousness;
+		this.entityDesc = entityDesc;
+	}
 
 	public String getEntityName() {
 		return entityName;

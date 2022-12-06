@@ -32,15 +32,17 @@ public class MainProyectFT {
 		BackroomDao backroomDao = new BackroomDao();
 		backroomDao.modificar(backroom);*/
 		
-		//NO SE BORRA LA ENTIDAD PERO SI LA BACKROOM--------------------------------------------
 		//Para borrar una backroom.
 		/*Backroom backroom = new Backroom(1,"a",1,"a");
 		BackroomDao backroomDao = new BackroomDao();
 		backroomDao.borrar(backroom);*/
 		
+		//Para buscar una backroom por nombre.
+		/*BackroomDao backroomDao = new BackroomDao();
+		System.out.println(backroomDao.buscarPorNombre("a"));*/
+		
 		//Para insertar una entity en la base de datos.
-		/*Backroom backroom = new Backroom(1,"a",1,"a");
-		Entity entity = new Entity("z",backroom,"z","z");
+		/*Entity entity = new Entity("z","z","z");
 		EntityDao entityDao = new EntityDao();
 		entityDao.insertar(entity);*/
 

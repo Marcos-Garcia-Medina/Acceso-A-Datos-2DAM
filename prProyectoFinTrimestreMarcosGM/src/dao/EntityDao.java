@@ -15,34 +15,28 @@ public class EntityDao extends ObjetoDao implements InterfazDao<Entity>{
 	
 	@Override
 	public ArrayList<Entity> buscarTodos() {
-		return null;
-		/*ArrayList<Entity> entitys = new ArrayList<>();
+		ArrayList<Entity> entitys = new ArrayList<>();
 		
 		connection = openConnection();
 		
 		String query = "select * from entitys";
-	
 		try {
 			PreparedStatement ps = connection.prepareStatement(query);
 			ResultSet rs = ps.executeQuery();
+			
 			while(rs.next()) {
-				Entity entity = new Entity(rs.getString("entityName"),
-										   rs.getInt("backroomNum"),
-										   rs.getString("dangerousness"),
-										   rs.getString("entityDesc")
-									);
-				entitys.add(entity);
+				System.out.println(rs);
 			}
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return entitys;*/
+		return entitys;		
 	}
 
 	@Override
 	public Entity buscarPorId(int i) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -97,7 +91,23 @@ public class EntityDao extends ObjetoDao implements InterfazDao<Entity>{
             e.printStackTrace();
         }
         closeConnection();
+	}
+	
+	public void borrarPorBackroom (int levelNum) {
+		connection = openConnection();
 		
+		String query = "delete from entitys where backroomNum = ?";
+		
+		try {
+			PreparedStatement ps = connection.prepareStatement(query);
+			ps.setInt(1, levelNum);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		closeConnection();
 	}
 
 }
