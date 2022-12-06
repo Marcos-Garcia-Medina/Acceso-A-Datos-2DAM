@@ -2,11 +2,6 @@ package main;
 
 import java.util.ArrayList;
 
-import dao.SerieDao;
-import dao.TemporadaDao;
-import pojo.Serie;
-import pojo.Temporada;
-
 public class Main {
 
 	public static void main(String[] args) {
