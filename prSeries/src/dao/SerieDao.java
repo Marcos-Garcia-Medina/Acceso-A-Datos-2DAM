@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import UtilsDB.DatabaseConnection;
@@ -19,31 +20,48 @@ public class SerieDao extends ObjetoDao implements InterfazDao<Serie>{
 	}
 	
 	@Override
-	public ArrayList<Serie> buscarTodos() {
-		ArrayList<Serie> series = new ArrayList<>();
-		
-		connection = openConnection();
-		
-		String query = "select * from series";
-	
-		try {
-			PreparedStatement ps = connection.prepareStatement(query);
-			ResultSet rs = ps.executeQuery();
-			while(rs.next()) {
-				Serie serie = new Serie(rs.getInt("id"),
-										   rs.getString("titulo"),
-										   rs.getInt("edad"),
-										   rs.getString("plataforma"),
-										   null
-									);
-				series.add(serie);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return series;
-	}
+    public ArrayList<Serie> buscarTodos() {
+
+        connection = openConnection();
+
+        ArrayList<Serie> series = new ArrayList<Serie>();
+        String query = "select * from series";
+        Serie serie = null;
+
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+
+            while (rs.next()) {
+                //Hacemos consulta para coger todas las temporadas de la serie que creamos después:
+                ArrayList<Temporada> temporadas = new ArrayList<Temporada>();
+
+                serie = new Serie(rs.getInt("id"), rs.getString("titulo"), rs.getInt("edad"),
+                        rs.getString("plataforma"), temporadas);
+
+                String query_temporada = "select * from temporadas where serie_id = ?";
+                PreparedStatement ps_temporadas = connection.prepareStatement(query_temporada);
+                ps_temporadas.setInt(1, rs.getInt("id")); 
+                ResultSet rs_temporadas = ps_temporadas.executeQuery();
+
+                while(rs_temporadas.next()) {
+                    Temporada temporada = new Temporada(rs_temporadas.getInt("id"), rs_temporadas.getInt("num_temporada"), rs_temporadas.getString("titulo"));
+                    temporadas.add(temporada);
+                }
+
+                serie.setTemporadas(temporadas); 
+                //En este punto, la serie está completa.
+                series.add(serie);
+            }
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        closeConnection();
+
+        return series;
+    }
 
 	@Override
 	public Serie buscarPorId(int id) {

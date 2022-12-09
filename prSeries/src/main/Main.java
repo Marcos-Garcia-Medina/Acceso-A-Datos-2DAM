@@ -2,11 +2,15 @@ package main;
 
 import java.util.ArrayList;
 
+import dao.SerieDao;
+import pojo.Serie;
+import pojo.Temporada;
+
 public class Main {
 
 	public static void main(String[] args) {
-		/*Serie serie = new Serie("Los Simpsons", 7, "Disney Plus");
-		SerieDao serieDao = new SerieDao();*/
+		//Serie serie = new Serie("Los Simpsons", 7, "Disney Plus");
+		SerieDao serieDao = new SerieDao();
 		//serieDao.insertar(serie);
 		
 		//SerieDao serieDao = new SerieDao();
@@ -21,10 +25,14 @@ public class Main {
 		temporadaDao.insertar(t1);
 		temporadaDao.insertar(t2);*/
 		
-		/*ArrayList<Serie> series = serieDao.buscarTodos();
+		ArrayList<Serie> series = serieDao.buscarTodos();
+		
 		for(Serie serie : series) {
-			System.out.println(serie);
-		}*/
+			System.out.println("SERIE: " + serie.getTitulo());
+			for(Temporada temporada : serie.getTemporadas()) {
+				System.out.println("TEMPORADA: " + temporada.getTitulo());
+			}
+		}
 		
 		/*ArrayList<Temporada> temporadas = serieDao.obtenerTemporadas(serie);
 		for(Temporada temporada : temporadas) {
