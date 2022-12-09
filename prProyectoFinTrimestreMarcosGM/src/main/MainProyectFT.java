@@ -10,68 +10,70 @@ import pojo.Entity;
 public class MainProyectFT {
 
 	public static void main(String[] args) {
+		
+		BackroomDao backroomDao = new BackroomDao();
+		EntityDao entityDao = new EntityDao();
+		
 		//Para insertar una backroom en la base de datos.
-		/*Backroom backroom = new Backroom(1,"a",1,"a");
-		BackroomDao backroomDao = new BackroomDao();
-		backroomDao.insertar(backroom);*/
+		Backroom backroomNueva1 = new Backroom(1,"Backroom 1",1,"Facil");
+		backroomDao.insertar(backroomNueva1);
 		
-		//Para ver todas las backrooms de la base de datos.
-		/*BackroomDao backroomDao = new BackroomDao();
-		ArrayList<Backroom> backrooms = backroomDao.buscarTodos();
-		for(Backroom backroom : backrooms) {
-			System.out.println(backroom);
-		}*/
-		
-		//Para ver las backrooms por id de la base de datos.
-		/*BackroomDao backroomDao = new BackroomDao();
-		Backroom backroom = backroomDao.buscarPorId(1);
-		System.out.println(backroom);*/
-		
-		//Para modificar una backroom ya creada.
-		/*Backroom backroom = new Backroom(1,"Backroom 1 Mod",2,"Muy Facil");
-		BackroomDao backroomDao = new BackroomDao();
-		backroomDao.modificar(backroom);*/
-		
-		//Para borrar una backroom.
-		/*Backroom backroom = new Backroom(1,"a",1,"a");
-		BackroomDao backroomDao = new BackroomDao();
-		backroomDao.borrar(backroom);*/
-		
-		//Para buscar una backroom por nombre.
-		/*BackroomDao backroomDao = new BackroomDao();
-		System.out.println(backroomDao.buscarPorNombre("a"));*/
+		//Para insertar una backroom en la base de datos.
+		Backroom backroomNueva2 = new Backroom(2,"Backroom 2",1,"Medio");
+		backroomDao.insertar(backroomNueva2);
 		
 		//Para insertar una entity en la base de datos.
-		/*Entity entity = new Entity("z","z","z");
-		EntityDao entityDao = new EntityDao();
-		entityDao.insertar(entity);*/
-
-		//PENDIENTE PARA REVISAR----------------------------------------------------------------
-		//Para ver todas las entitys de la base de datos.
-		/*EntityDao entityDao = new EntityDao();
-		ArrayList<Entity> entitys = entityDao.buscarTodos();
-		for(Entity entity : entitys) {
-			System.out.println(entity);
-		}*/
+		Entity entityNueva1 = new Entity(1,"Slipper",backroomNueva1,"Neutro","Duerme mucho.");
+		entityDao.insertar(entityNueva1);
 		
-		//PENDIENTE PARA HACER------------------------------------------------------------------
-		//Para ver las entitys por nombre de la base de datos.
-		/*EntityDao entityDao = new EntityDao();
-		ArrayList<Entity> entitys = entityDao.buscarPorId(1);
-		for(Entity entity : entitys) {
-			System.out.println(entity);
-		}*/
+		//Para insertar una entity en la base de datos.
+		Entity entityNueva2 = new Entity(2,"Slipper v2",backroomNueva2,"Hostil","No duerme tanto.");
+		entityDao.insertar(entityNueva2);
+		
+		//Para ver todas las backrooms de la base de datos.
+		ArrayList<Backroom> backrooms = backroomDao.buscarTodos();
+		for(Backroom backroomiAImprimir1 : backrooms) {
+			System.out.println(backroomiAImprimir1);
+		}
+		
+		//Para ver las backrooms por id de la base de datos.
+		System.out.println(backroomDao.buscarPorId(1));
+		
+		//Para buscar una backroom por nombre.
+		System.out.println(backroomDao.buscarPorNombre("Backroom 1"));
+		
+		//Para ver todas las entitys de la base de datos.
+		ArrayList<Entity> entitys = entityDao.buscarTodos();
+		for(Entity entitysiAImpirimir1 : entitys) {
+			System.out.println(entitysiAImpirimir1);
+		}
+				
+		//Para ver las entitys por id de la base de datos.
+		System.out.println(entityDao.buscarPorId(2));
+		
+		//Para modificar una backroom ya creada.
+		Backroom backroomAModificar = new Backroom(1,"Backroom 1 Mod",1,"Muy Facil");
+		backroomDao.modificar(backroomAModificar);
 		
 		//Para modificar una entity ya creada.
-		/*Backroom backroom = new Backroom(1,"a",1,"a");
-		Entity entity = new Entity("z",backroom,"se ha modificado","se ha modificado");
-		EntityDao entityDao = new EntityDao();
-		entityDao.modificar(entity);*/
-
+		Entity entityAModificar= new Entity(1,"Slipper Mod",backroomAModificar,"Neutro Mod","Duerme mucho (o no).");
+		entityDao.modificar(entityAModificar);
+		
 		//Para borrar una entity.
-		/*Backroom backroom = new Backroom(1,"a",1,"a");
-		Entity entity = new Entity("z",backroom,"z","z");
-		EntityDao entityDao = new EntityDao();
-		entityDao.borrar(entity);*/
+		Entity entity = new Entity(1,"Slipper Mod",backroomAModificar,"Neutro Mod","Duerme mucho (o no).");
+		entityDao.borrar(entity);
+		
+		//Para borrar una entity.
+		Entity entity2 = new Entity(2,"Slipper v2",backroomNueva2,"Hostil","No duerme tanto.");
+		entityDao.borrar(entity2);
+		
+		//Para borrar una backroom.
+		Backroom backroom = new Backroom(1,"Backroom 1 Mod",1,"Muy Facil");
+		backroomDao.borrar(backroom);
+		
+		//Para borrar una backroom.
+		Backroom backroom2 = new Backroom(2,"Backroom 2",1,"Medio");
+		backroomDao.borrar(backroom2);
+
 	}
 }

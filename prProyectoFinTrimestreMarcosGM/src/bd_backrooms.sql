@@ -12,8 +12,10 @@ CREATE TABLE backrooms (
 );
 
 CREATE TABLE entitys (
+	/*ID de la entidad*/
+    entityNum INT PRIMARY KEY,
 	/*Nombre de la entidad*/
-    entityName       VARCHAR(40) PRIMARY KEY,
+    entityName       VARCHAR(40) NOT NULL,
     /*Numero de la backroom*/
 	backroomNum 	 INT NOT NULL,
     /*Peligrosidad de la backroom*/
@@ -23,4 +25,4 @@ CREATE TABLE entitys (
 );
 
 ALTER TABLE entitys ADD FOREIGN KEY (backroomNum) REFERENCES backrooms(levelNum);
-SELECT * FROM backrooms;
+SELECT * FROM entitys;

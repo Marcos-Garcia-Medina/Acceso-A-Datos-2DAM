@@ -1,31 +1,43 @@
 package pojo;
 
 public class Entity {
+	private int entityNum;
 	private String entityName;
 	private Backroom backroom;
 	private String dangerousness;
 	private String entityDesc;
 	
-	public Entity(String entityName, Backroom backroom, String dangerousness, String entityDesc) {
+	public Entity(int entityNum, String entityName, Backroom backroom, String dangerousness, String entityDesc) {
 		super();
+		this.entityNum = entityNum;
 		this.entityName = entityName;
 		this.backroom = backroom;
 		this.dangerousness = dangerousness;
 		this.entityDesc = entityDesc;
 	}
 	
-	public Entity(Backroom backroom, String dangerousness, String entityDesc) {
+	public Entity(int entityNum, Backroom backroom, String dangerousness, String entityDesc) {
 		super();
+		this.entityNum = entityNum;
 		this.backroom = backroom;
 		this.dangerousness = dangerousness;
 		this.entityDesc = entityDesc;
 	}
 	
-	public Entity(String entityName, String dangerousness, String entityDesc) {
+	public Entity(int entityNum, String entityName, String dangerousness, String entityDesc) {
 		super();
+		this.entityNum = entityNum;
 		this.entityName = entityName;
 		this.dangerousness = dangerousness;
 		this.entityDesc = entityDesc;
+	}
+	
+	public int getEntityNum() {
+		return entityNum;
+	}
+
+	public void setEntityNum(int entityNum) {
+		this.entityNum = entityNum;
 	}
 
 	public String getEntityName() {
@@ -59,10 +71,10 @@ public class Entity {
 	public void setEntityDesc(String entityDesc) {
 		this.entityDesc = entityDesc;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "Entity [entityName=" + entityName + ", Backroom=" + backroom + ", dangerousness=" + dangerousness
-				+ ", entityDesc=" + entityDesc + "]";
+		return "Entity [entityNum=" + entityNum + ", entityName=" + entityName + ", backroom=" + backroom
+				+ ", dangerousness=" + dangerousness + ", entityDesc=" + entityDesc + "]";
 	}
 }

@@ -25,7 +25,30 @@ public class EntityDao extends ObjetoDao implements InterfazDao<Entity>{
 			ResultSet rs = ps.executeQuery();
 			
 			while(rs.next()) {
-				System.out.println(rs);
+				Entity entity = new Entity(rs.getInt("entityNum"),
+						rs.getString("entityName"),
+						null,
+						rs.getString("dangerousness"),
+						rs.getString("entityDesc"));
+				
+				 String query_backroom = "select * from backrooms where levelNum = ?";
+	             PreparedStatement ps_backrooms = connection.prepareStatement(query_backroom);
+	             ps_backrooms.setInt(1, rs.getInt("backroomNum")); 
+	             ResultSet rs_backroom = ps_backrooms.executeQuery();
+	             
+	             while(rs_backroom.next()) {
+	            	 
+	            	Backroom backroom = new Backroom(rs_backroom.getInt("levelNum"),
+	            			rs_backroom.getString("backroomName"),
+	            			rs_backroom.getInt("entitysNum"),
+	            			rs_backroom.getString("difficulty"));
+	 						
+	            	 if(rs_backroom.getInt("levelNum") == rs.getInt("backroomNum")) {
+	            		 entity.setBackroom(backroom);
+	            	 }
+	             }
+	             
+	             entitys.add(entity);
 			}
 			
 		} catch (SQLException e) {
@@ -37,20 +60,60 @@ public class EntityDao extends ObjetoDao implements InterfazDao<Entity>{
 
 	@Override
 	public Entity buscarPorId(int i) {
-		return null;
+		Entity entity = null;
+		
+		connection = openConnection();
+		
+		String query = "select * from entitys where entityNum = ?";
+		
+		try {
+			PreparedStatement ps = connection.prepareStatement(query);
+			ps.setInt(1, i); 
+			ResultSet rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				entity = new Entity(rs.getInt("entityNum"),
+						rs.getString("entityName"),
+						null,
+						rs.getString("dangerousness"),
+						rs.getString("entityDesc"));
+			
+				String query_backroom = "select * from backrooms where levelNum = ?";
+		        PreparedStatement ps_backrooms = connection.prepareStatement(query_backroom);
+		        ps_backrooms.setInt(1, rs.getInt("backroomNum")); 
+		        ResultSet rs_backroom = ps_backrooms.executeQuery();
+		             
+		        while(rs_backroom.next()) { 
+		        	Backroom backroom = new Backroom(rs_backroom.getInt("levelNum"),
+		        			rs_backroom.getString("backroomName"),
+		            		rs_backroom.getInt("entitysNum"),
+		            		rs_backroom.getString("difficulty"));
+		 						
+		            if(rs_backroom.getInt("levelNum") == rs.getInt("backroomNum")) {
+		            	entity.setBackroom(backroom);
+		            }
+		        }	
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return entity;		
 	}
 
 	@Override
 	public void insertar(Entity t) {
 		connection = openConnection();
 
-        String query = "insert into entitys(entityName, backroomNum, dangerousness, entityDesc) values (?,?,?,?)";
+        String query = "insert into entitys(entityNum, entityName, backroomNum, dangerousness, entityDesc) values (?,?,?,?,?)";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
-            ps.setString(1, t.getEntityName());
-            ps.setInt(2, t.getBackroom().getLevelNum());
-            ps.setString(3, t.getDangerousness());
-            ps.setString(4, t.getEntityDesc());
+            ps.setInt(1, t.getEntityNum());
+            ps.setString(2, t.getEntityName());
+            ps.setInt(3, t.getBackroom().getLevelNum());
+            ps.setString(4, t.getDangerousness());
+            ps.setString(5, t.getEntityDesc());
             ps.executeUpdate();
         } catch (SQLException e) {
             // TODO Auto-generated catch block
@@ -62,13 +125,15 @@ public class EntityDao extends ObjetoDao implements InterfazDao<Entity>{
 	public void modificar(Entity t) {
 		connection = openConnection();
 
-        String query = "update entitys set backroomNum = ?, dangerousness = ?, entityDesc = ? where entityName = ?";
+        String query = "update entitys set entityNum = ?, entityName = ?, backroomNum = ?, dangerousness = ?, entityDesc = ? where entityNum = ?";
         try {
             PreparedStatement ps = connection.prepareStatement(query);
-            ps.setInt(1, t.getBackroom().getLevelNum());
-            ps.setString(2, t.getDangerousness());
-            ps.setString(3, t.getEntityDesc());
-            ps.setString(4, t.getEntityName());
+            ps.setInt(1, t.getEntityNum());
+            ps.setString(2, t.getEntityName());
+            ps.setInt(3, t.getBackroom().getLevelNum());
+            ps.setString(4, t.getDangerousness());
+            ps.setString(5, t.getEntityDesc());
+            ps.setInt(6, t.getEntityNum());
             ps.executeUpdate();
 		}catch (SQLException e) {
 	        // TODO Auto-generated catch block
