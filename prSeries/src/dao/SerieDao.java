@@ -66,29 +66,42 @@ public class SerieDao extends ObjetoDao implements InterfazDao<Serie>{
 	@Override
 	public Serie buscarPorId(int id) {
 		connection = openConnection();
-		
-		String query = "select * from series where id = ?";
-		Serie serie = null;
-		PreparedStatement ps;
-		try {
-			ps = connection.prepareStatement(query);
-			ps.setInt(1, id);
-			ResultSet  rs = ps.executeQuery();
-			
-			while(rs.next()) {
-				serie = new Serie(rs.getInt("id"),
-									rs.getString("titulo"),
-									rs.getInt("edad"),
-									rs.getString("plataforma"),
-									null);	
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		closeConnection();
-		
-		return serie;
+
+        String query_series = "select * from series where id = ?";
+        Serie serie = null;
+
+        try {
+        	PreparedStatement ps_series = connection.prepareStatement(query_series);
+        	ps_series.setInt(1, id); 
+            ResultSet rs_series = ps_series.executeQuery();
+
+            while (rs_series.next()) {
+                
+                ArrayList<Temporada> temporadas = new ArrayList<Temporada>();
+
+                serie = new Serie(rs_series.getInt("id"), rs_series.getString("titulo"), rs_series.getInt("edad"),
+                		rs_series.getString("plataforma"), temporadas);
+
+                String query_temporada = "select * from temporadas where serie_id = ?";
+                PreparedStatement ps_temporadas = connection.prepareStatement(query_temporada);
+                ps_temporadas.setInt(1, rs_series.getInt("id")); 
+                ResultSet rs_temporadas = ps_temporadas.executeQuery();
+
+                while(rs_temporadas.next()) {
+                    Temporada temporada = new Temporada(rs_temporadas.getInt("id"), rs_temporadas.getInt("num_temporada"), rs_temporadas.getString("titulo"));
+                    temporadas.add(temporada);
+                }
+
+                serie.setTemporadas(temporadas); 
+            }
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        closeConnection();
+
+        return serie;
 	}
 
 	@Override

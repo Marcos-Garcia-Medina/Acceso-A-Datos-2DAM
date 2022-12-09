@@ -25,14 +25,16 @@ public class Main {
 		temporadaDao.insertar(t1);
 		temporadaDao.insertar(t2);*/
 		
-		ArrayList<Serie> series = serieDao.buscarTodos();
+		/*ArrayList<Serie> series = serieDao.buscarTodos();
 		
 		for(Serie serie : series) {
 			System.out.println("SERIE: " + serie.getTitulo());
 			for(Temporada temporada : serie.getTemporadas()) {
 				System.out.println("TEMPORADA: " + temporada.getTitulo());
 			}
-		}
+		}*/
+		
+		System.out.println(serieDao.buscarPorId(2));
 		
 		/*ArrayList<Temporada> temporadas = serieDao.obtenerTemporadas(serie);
 		for(Temporada temporada : temporadas) {
