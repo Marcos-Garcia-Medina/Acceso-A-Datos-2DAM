@@ -70,6 +70,6 @@ public class Backroom {
 	@Override
 	public String toString() {
 		return "Backroom [levelNum=" + levelNum + ", backroomName=" + backroomName + ", entitysNum=" + entitysNum
-				+ ", difficulty=" + difficulty + ", entitys=" + entitys + "]";
+				+ ", difficulty=" + difficulty;
 	}
 }

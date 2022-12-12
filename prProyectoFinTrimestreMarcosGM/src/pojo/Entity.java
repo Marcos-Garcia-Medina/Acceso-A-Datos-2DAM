@@ -74,7 +74,7 @@ public class Entity {
 
 	@Override
 	public String toString() {
-		return "Entity [entityNum=" + entityNum + ", entityName=" + entityName + ", backroom=" + backroom
-				+ ", dangerousness=" + dangerousness + ", entityDesc=" + entityDesc + "]";
+		return "Entity [entityNum=" + entityNum + ", entityName=" + entityName +
+				 ", dangerousness=" + dangerousness + ", entityDesc=" + entityDesc + "]";
 	}
 }

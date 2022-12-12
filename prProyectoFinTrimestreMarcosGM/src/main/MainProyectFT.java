@@ -15,7 +15,7 @@ public class MainProyectFT {
 		EntityDao entityDao = new EntityDao();
 		
 		//Para insertar una backroom en la base de datos.
-		Backroom backroomNueva1 = new Backroom(1,"Backroom 1",1,"Facil");
+		/*Backroom backroomNueva1 = new Backroom(1,"Backroom 1",1,"Facil");
 		backroomDao.insertar(backroomNueva1);
 		
 		//Para insertar una backroom en la base de datos.
@@ -28,7 +28,7 @@ public class MainProyectFT {
 		
 		//Para insertar una entity en la base de datos.
 		Entity entityNueva2 = new Entity(2,"Slipper v2",backroomNueva2,"Hostil","No duerme tanto.");
-		entityDao.insertar(entityNueva2);
+		entityDao.insertar(entityNueva2);*/
 		
 		//Para ver todas las backrooms de la base de datos.
 		ArrayList<Backroom> backrooms = backroomDao.buscarTodos();
@@ -37,7 +37,7 @@ public class MainProyectFT {
 		}
 		
 		//Para ver las backrooms por id de la base de datos.
-		System.out.println(backroomDao.buscarPorId(1));
+		/*System.out.println(backroomDao.buscarPorId(1));
 		
 		//Para buscar una backroom por nombre.
 		System.out.println(backroomDao.buscarPorNombre("Backroom 1"));
@@ -73,7 +73,7 @@ public class MainProyectFT {
 		
 		//Para borrar una backroom.
 		Backroom backroom2 = new Backroom(2,"Backroom 2",1,"Medio");
-		backroomDao.borrar(backroom2);
+		backroomDao.borrar(backroom2);*/
 
 	}
 }
