@@ -2,6 +2,11 @@ package dao;
 
 import java.util.ArrayList;
 
+/**
+ * Interfaz con diversas funciones a implementar.
+ * @author Marcos Garcia Medina
+ * @param <T> El objeto que usara la interafaz.
+ */
 public interface InterfazDao<T> {
 	/**
 	 * Muestra todos los objetos T de la base de datos.

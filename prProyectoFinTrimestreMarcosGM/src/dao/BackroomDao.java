@@ -10,14 +10,27 @@ import java.util.ArrayList;
 import pojo.Backroom;
 import pojo.Entity;
 
+/**
+ * Clase BackroomDao, con todas las funciones a usar sobre las backrooms.
+ * @author Marcos Garcia Medina.
+ */
 public class BackroomDao extends ObjetoDao implements InterfazDao<Backroom>{
 
+	/**
+	 * connection: Objeto connecion que nos servira para conectarnos a la base de datos.
+	 */
 	private static Connection connection;
 	
+	/**
+	 * Constructor vacio de BackroomDao.
+	 */
 	public BackroomDao() {
 		
 	}
 
+	/**
+	 * Funcion buscarTodos que nos imprime todas las backroom de la base de datos.
+	 */
 	public ArrayList<Backroom> buscarTodos() {
         connection = openConnection();
 
@@ -67,6 +80,11 @@ public class BackroomDao extends ObjetoDao implements InterfazDao<Backroom>{
         return backrooms;
     }
 	
+	/**
+	 * Funcion buscarPorId que nos imprime la backroom que tenga el id/levelNum que le decimos por
+	 * parametros.
+	 * @param i El levelNum/id de la backroom a buscar.
+	 */
 	@Override
 	public Backroom buscarPorId(int i) {
 		connection = openConnection();
@@ -112,6 +130,10 @@ public class BackroomDao extends ObjetoDao implements InterfazDao<Backroom>{
         return backroom;
 	}
 
+	/**
+	 * Funcion que nos inserta una backroom en la base de datos.
+	 * @param t Objeto backroom del cual insertaremos los datos en la base de datos.
+	 */
 	@Override
 	public void insertar(Backroom t) {
 		connection = openConnection();
@@ -132,6 +154,10 @@ public class BackroomDao extends ObjetoDao implements InterfazDao<Backroom>{
         closeConnection();
 	}
 
+	/**
+	 * Funcion modificar que nos modifica la backroom que le pasemos por parametros.
+	 * @param t Objeto backroom a modificar.
+	 */
 	@Override
 	public void modificar(Backroom t) {
 		connection = openConnection();
@@ -150,6 +176,11 @@ public class BackroomDao extends ObjetoDao implements InterfazDao<Backroom>{
 	    }
 	}
 
+	/**
+	 * Funcion borrar que nos borra la backroom que le digamos por parametros.
+	 * Si esta tiene entitys, se borraran antes.
+	 * @param backroom La backroom a borrar.
+	 */
 	@Override
 	public void borrar(Backroom backroom) {
 		int levelNum = backroom.getLevelNum();
@@ -162,6 +193,8 @@ public class BackroomDao extends ObjetoDao implements InterfazDao<Backroom>{
 		String query = "delete from backrooms WHERE levelNum = ?";
 		
 		try {
+			entityDao.borrarPorBackroom(backroom.getLevelNum());
+			
 			PreparedStatement ps = connection.prepareStatement(query);
 			ps.setInt(1, levelNum); 
 			ps.executeUpdate();
@@ -169,9 +202,20 @@ public class BackroomDao extends ObjetoDao implements InterfazDao<Backroom>{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		closeConnection();
+		
+		try {
+			connection.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
+	/**
+	 * Funcion buscarPorNombre que nos busca la backroom que queramos por nombre.
+	 * @param i El nombre de la backroom que buscaremos.
+	 * @return El objeto backroom que queriamos.
+	 */
 	public Backroom buscarPorNombre(String i) {
 		connection = openConnection();
 		

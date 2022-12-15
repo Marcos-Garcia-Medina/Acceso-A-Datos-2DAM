@@ -9,10 +9,20 @@ import java.util.ArrayList;
 import pojo.Backroom;
 import pojo.Entity;
 
+/**
+ * Clase EntityDao, con todas las funciones a usar sobre las entitys.
+ * @author Marcos Garcia Medina.
+ */
 public class EntityDao extends ObjetoDao implements InterfazDao<Entity>{
 
+	/**
+	 * connection: Objeto connecion que nos servira para conectarnos a la base de datos.
+	 */
 	private static Connection connection;
 	
+	/**
+	 * Funcion buscarTodos que nos imprime todas las entitys de la base de datos.
+	 */
 	@Override
 	public ArrayList<Entity> buscarTodos() {
 		ArrayList<Entity> entitys = new ArrayList<>();
@@ -58,6 +68,11 @@ public class EntityDao extends ObjetoDao implements InterfazDao<Entity>{
 		return entitys;		
 	}
 
+	/**
+	 * Funcion buscarPorId que nos imprime la entity que tenga el id/entityNum que le decimos por
+	 * parametros.
+	 * @param i El entityNum/id de la entity a buscar.
+	 */
 	@Override
 	public Entity buscarPorId(int i) {
 		Entity entity = null;
@@ -102,6 +117,10 @@ public class EntityDao extends ObjetoDao implements InterfazDao<Entity>{
 		return entity;		
 	}
 
+	/**
+	 * Funcion que nos inserta una entity en la base de datos.
+	 * @param t Objeto entity del cual insertaremos los datos en la base de datos.
+	 */
 	@Override
 	public void insertar(Entity t) {
 		connection = openConnection();
@@ -121,6 +140,10 @@ public class EntityDao extends ObjetoDao implements InterfazDao<Entity>{
         }
 	}
 
+	/**
+	 * Funcion modificar que nos modifica la entity que le pasemos por parametros.
+	 * @param t Objeto entity a modificar.
+	 */
 	@Override
 	public void modificar(Entity t) {
 		connection = openConnection();
@@ -141,6 +164,10 @@ public class EntityDao extends ObjetoDao implements InterfazDao<Entity>{
 	    }
 	}
 
+	/**
+	 * Funcion borrar que nos borra la entity que queramos.
+	 * @param t Entity a borrar.
+	 */
 	@Override
 	public void borrar(Entity t) {
 		connection = openConnection();
@@ -158,6 +185,10 @@ public class EntityDao extends ObjetoDao implements InterfazDao<Entity>{
         closeConnection();
 	}
 	
+	/**
+	 * Funcion borrarPorBackroom que borra todas las entitys de una backroom.
+	 * @param levelNum El id/levelNum de la backroom de la cual borraremos las entidades.
+	 */
 	public void borrarPorBackroom (int levelNum) {
 		connection = openConnection();
 		
